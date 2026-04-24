@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KER — Kartu Energi Rakyat</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Library QR Scanner (dari CDN, tidak perlu install) -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+
+  <!-- ── HEADER ────────────────────────────────── -->
+  <header>
+    <div class="logo-icon">⛽</div>
+    <div>
+      <h1>Kartu Energi Rakyat</h1>
+      <p>SISTEM VERIFIKASI SUBSIDI BBM</p>
+    </div>
+  </header>
+
+  <!-- ── NOTIFIKASI ─────────────────────────────── -->
+  <div id="notifikasi" class="notifikasi"></div>
+
+  <!-- ── MAIN ──────────────────────────────────── -->
+  <main>
+
+    <!-- PANEL 1: IDLE (default) -->
+    <div id="panel-idle" class="panel aktif">
+      <div class="hero-area">
+        <div class="qr-ilustrasi">📱</div>
+        <h2>Scan Kartu Pengguna</h2>
+        <p>Arahkan kamera ke QR Code pada kartu KER,<br>atau masukkan ID secara manual.</p>
+      </div>
+      <div class="aksi-grid">
+        <button class="btn btn-primer" id="btn-scan">
+          📷 Scan QR
+        </button>
+        <button class="btn btn-sekunder" id="btn-input-manual">
+          ⌨️ Input Manual
+        </button>
+      </div>
+    </div>
+
+    <!-- PANEL 2: SCANNER -->
+    <div id="panel-scanner" class="panel">
+      <div class="scanner-wrap">
+        <div class="scanner-header">
+          <div class="indikator-hidup"></div>
+          <span>Kamera Aktif — Arahkan ke QR Code</span>
+        </div>
+        <!-- Library html5-qrcode akan merender kamera di sini -->
+        <div id="qr-reader"></div>
+      </div>
+      <button class="btn btn-bahaya btn-blok" id="btn-stop">
+        ✕ Hentikan Kamera
+      </button>
+    </div>
+
+    <!-- PANEL 3: INPUT MANUAL -->
+    <div id="panel-manual" class="panel">
+      <div class="form-manual">
+        <h3>⌨️ Input ID Manual</h3>
+        <div class="label-input">ID KARTU KER</div>
+        <input
+          type="text"
+          id="input-id"
+          class="input-teks"
+          placeholder="Contoh: KER-001-3271"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <div class="hint">
+          Coba: <span onclick="document.getElementById('input-id').value='KER-001-3271'">KER-001-3271</span> •
+          <span onclick="document.getElementById('input-id').value='KER-002-3273'">KER-002-3273</span> •
+          <span onclick="document.getElementById('input-id').value='KER-003-3275'">KER-003-3275</span> •
+          <span onclick="document.getElementById('input-id').value='KER-004-7371'">KER-004-7371</span>
+        </div>
+        <button class="btn btn-primer btn-blok" id="btn-cari-manual">
+          🔍 Cari Data
+        </button>
+        <button class="btn btn-sekunder btn-blok" id="btn-reset">
+          ← Kembali
+        </button>
+      </div>
+    </div>
+
+    <!-- PANEL 4: LOADING -->
+    <div id="panel-loading" class="panel">
+      <div class="loading-area">
+        <div class="spinner"></div>
+        <p>Mengambil data dari sistem...</p>
+      </div>
+    </div>
+
+    <!-- PANEL 5: HASIL DATA -->
+    <div id="panel-hasil" class="panel">
+      <div id="hasil-konten"></div>
+      <button class="btn btn-primer btn-blok" onclick="reset()">
+        🔄 Scan Berikutnya
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Script database harus dimuat dulu sebelum app.js -->
+  <script src="database.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
